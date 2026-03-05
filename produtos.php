@@ -137,7 +137,8 @@ try {
                                 <!-- Excluir registros -->
                                 <td style="text-align: center;border: 1px solid #000000;"><a href="excluir_produto.php?id_produto=<?php echo $linhas['id_produto']; ?>" onclick="return confirm('Deseja excluir este registro?')">
                                         <i class="fa-solid fa-trash-can" style="color: #ff4747;"></i>
-                                    </a></td>
+                                    </a>
+                                </td>
                             <?php } ?>
                         </tr>
                     <?php } ?>

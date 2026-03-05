@@ -1,17 +1,27 @@
 <?php
-include_once 'conexao.php';
+include 'conexao.php';
 
-$id_fornecedor_produto = $_POST['id_fornecedor_produto'];
-$escolha_produto = $_POST['escolha_produto'];
-$escolha_fornecedor = $_POST['escolha_fornecedor'];
-$categoria = $_POST['categoria'];
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    echo "Acesso inválido.";
+    exit;
+}
+
+$id_categoria = filter_input(INPUT_POST, 'id_categoria', FILTER_VALIDATE_INT);
+$escolha_produto = $_POST['escolha_produto'] ?? null;
+$escolha_fornecedor = $_POST['escolha_fornecedor'] ?? null;
+$categoria = $_POST['categoria'] ?? null;
+
+if (!$id_categoria || !$escolha_produto || !$escolha_fornecedor || !$categoria) {
+    echo "Dados incompletos.";
+    exit;
+}
 
 try {
-    $sql = $pdo->prepare("UPDATE categorias SET id_produto = ?, id_fornecedor = ?, categoria = ? WHERE id_fornecedor_produto = ?");
-    $sql->execute([$escolha_produto, $escolha_fornecedor, $categoria, $id_fornecedor_produto]);
+    $stmt = $pdo->prepare("UPDATE categorias SET id_produto = ?, id_fornecedor = ?, categoria = ? WHERE id_categoria = ?");
+    $stmt->execute([$escolha_produto, $escolha_fornecedor, $categoria, $id_categoria]);
 
-    header('location:index.php?pagina=categorias');
+    header('Location: index.php?pagina=categorias');
+    exit;
 } catch (Exception $e) {
-    echo 'Não foi possível atualizar os registros: ' . $e->getMessage();
+    echo "Erro ao atualizar: " . $e->getMessage();
 }
-?>

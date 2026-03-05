@@ -1,16 +1,19 @@
 <?php
-require_once("conexao.php");
-if(isset($_GET['id_fornecedor_produto'])){
-    $id_fornecedor_produto= $_GET['id_fornecedor_produto'];
+require_once 'conexao.php';
 
-    try{
-        $sql= $pdo->query("DELETE FROM categorias WHERE id_fornecedor_produto = '$id_fornecedor_produto'");
-        echo "<script>window.alert('Categoria excluída com sucesso')</script>";
-        header('location:index.php?pagina=categorias');
+$id_categoria = filter_input(INPUT_GET, 'id_categoria', FILTER_VALIDATE_INT);
 
-    }catch(Exception $e){
-        echo "Não foi possível excluir o registro" .$e;
-    }
+if (!$id_categoria) {
+    die("ID inválido.");
 }
 
-?>
+try {
+    $stmt = $pdo->prepare("DELETE FROM categorias WHERE id_categoria = ?");
+    $stmt->execute([$id_categoria]);
+
+    header("Location: index.php?pagina=categorias");
+    exit;
+
+} catch (Exception $e) {
+    die("Erro ao excluir: " . $e->getMessage());
+}

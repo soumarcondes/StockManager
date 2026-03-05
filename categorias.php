@@ -1,41 +1,16 @@
 <?php
-// Verificar se a sessão não está ativa antes de iniciar
-if (session_status() == PHP_SESSION_NONE) {
-    session_start();
-}
+// Permissões (exemplo)
+$nivel_usuario = $_SESSION['nivel'] ?? '';
+$permitir_editar_excluir = ($nivel_usuario === 'admin');
 
-// Verificar se o usuário está logado
-if (!isset($_SESSION['usuario']) && !isset($_SESSION['nivel'])) {
-    header('Location: login.php');
-    exit;
-}
+$sql = $pdo->query("
+    SELECT categorias.*, produtos.nome_produto, fornecedores.nome_fornecedor
+    FROM categorias
+    JOIN produtos ON categorias.id_produto = produtos.id_produto
+    JOIN fornecedores ON categorias.id_fornecedor = fornecedores.id_fornecedor
+");
 
-try {
-    // Incluir arquivo de conexão com o banco de dados
-    require 'conexao.php';  // Certifique-se de que o caminho está correto
-
-    // Recupera o nível de acesso armazenado na sessão
-    $nivel_usuario = $_SESSION['nivel'];
-
-    // Permitir inserção de produtos para todos os usuários
-    $permitir_inserir = true;
-
-    // Se o nível do usuário é admin, permita a edição e exclusão
-    $permitir_editar_excluir = ($nivel_usuario == "admin");
-
-    // Consulta para selecionar categorias, produtos e fornecedores
-    $sql_categorias = $pdo->query("
-        SELECT categorias.*, produtos.nome_produto, fornecedores.nome_fornecedor 
-        FROM categorias 
-        JOIN produtos ON categorias.id_produto = produtos.id_produto 
-        JOIN fornecedores ON categorias.id_fornecedor = fornecedores.id_fornecedor
-    ");
-    $resultados = $sql_categorias->fetchAll();
-
-} catch (PDOException $e) {
-    // Exibir mensagem de erro em caso de falha
-    echo "Erro: " . $e->getMessage();
-}
+$categorias = $sql->fetchAll(PDO::FETCH_ASSOC);
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -68,43 +43,43 @@ try {
                 <img src="img/logoc.png" alt="Logo">
                 <h1>Categorias</h1>
             </div>
-            <?php if ($permitir_inserir) { ?>
+            <?php if ($permitir_editar_excluir): ?>
                 <div id="inserir">
-                    <a href="?pagina=inserir_categoria">NOVA CATEGORIA<i class="fa-solid fa-plus"></i></a>
+                    <a href="?pagina=inserir_categoria">Nova Categoria <i class="fa-solid fa-plus"></i></a>
                 </div>
-            <?php } ?>
+            <?php endif; ?>
             <table style="border:1px solid #ccc; width:100%; text-align: center;" id="categorias" style="width:100%;">
                 <thead>
                     <tr style="background-color: #ddd;">
                         <th style="text-align:center;">Produto</th>
                         <th style="text-align:center;">Nome do Fornecedor</th>
                         <th style="text-align:center;">Categoria</th>
-                        <?php if ($permitir_editar_excluir) { ?>
+                        <?php if ($permitir_editar_excluir): ?>
                             <th style="text-align:center;">Editar</th>
                             <th style="text-align:center;">Remover</th>
-                        <?php } ?>
+                        <?php endif; ?>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php foreach ($resultados as $linha) { ?>
+                    <?php foreach ($categorias as $cat): ?>
                         <tr style="background-color: white;">
-                            <td style="text-align: center;border: 1px solid #000000;"><?php echo isset($linha['nome_produto']) ? $linha['nome_produto'] : 'Produto não encontrado'; ?></td>
-                            <td style="text-align: center;border: 1px solid #000000;"><?php echo isset($linha['nome_fornecedor']) ? $linha['nome_fornecedor'] : 'Fornecedor não encontrado'; ?></td>
-                            <td style="text-align: center;border: 1px solid #000000;"><?php echo $linha['categoria']; ?></td>
-                            <?php if ($permitir_editar_excluir) { ?>
+                            <td style="text-align: center;border: 1px solid #000000;"><?php echo htmlspecialchars($cat['nome_produto']); ?></td>
+                            <td style="text-align: center;border: 1px solid #000000;"><?php echo htmlspecialchars($cat['nome_fornecedor']) ?></td>
+                            <td style="text-align: center;border: 1px solid #000000;"><?php echo htmlspecialchars($cat['categoria']) ?></td>
+                            <?php if ($permitir_editar_excluir): ?>
                                 <td style="text-align: center;border: 1px solid #000000;">
-                                    <a href="?pagina=inserir_categoria&editar=<?php echo $linha['id_fornecedor_produto']; ?>">
+                                    <a href="?pagina=inserir_categoria&editar=<?php echo $cat['id_categoria']; ?>">
                                         <i class="fa-solid fa-user-pen"></i>
                                     </a>
                                 </td>
                                 <td style="text-align: center;border: 1px solid #000000;">
-                                    <a href="excluir_categoria.php?id_fornecedor_produto=<?php echo $linha['id_fornecedor_produto']; ?>" onclick="return confirm('Deseja excluir este registro?')">
+                                    <a href="excluir_categoria.php?id_categoria=<?php echo $cat['id_categoria']; ?>" onclick="return confirm('Deseja excluir este registro?')">
                                         <i class="fa-solid fa-trash-can" style="color: #ff4747;"></i>
                                     </a>
                                 </td>
-                            <?php } ?>
+                            <?php endif; ?>
                         </tr>
-                    <?php } ?>
+                    <?php endforeach; ?>
                 </tbody>
             </table>
         </div>
