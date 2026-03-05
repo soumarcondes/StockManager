@@ -1,33 +1,125 @@
-Este sistema foi desenvolvido para facilitar a gestão de estoque em uma empresa ou 
-logística. Com este sistema, você poderá gerenciar os produtos, fornecedores e 
-categorias, facilitando o acompanhamento do estoque e administrativo da empresa.}
-Para entrar no sistema você tem que fazer login ou cadastrar um usuário novo. 
-Também tem o recurso para recuperar a senha (porém ainda estou pensando em como 
-deixar o sistema seguro, então não tem como atualizar a senha direto no site, 
-tecnicamente teria que me mandar um email ou uma mensagem, 
-se supostamente esse site estivesse funcionando e se não fosse apenas um projeto/teste) 
-O sistema possui quatro abas/páginas de navegação, que são: home (que é a inicial, 
-onde após logar, você é redirecionado para ela), produtos, fornecedores e categorias.
+# 📦 Stock Manager - Sistema de Gestão de Estoque
 
-    Recursos Principais:
-        Cadastrar Produtos: Registre os dados dos produtos, incluindo data, 
-        descrição, entrada e saída e outras informações relevantes.
-        Excluir Produtos: Exclua produtos.
-        Editar Produtos: Altere informações de produtos.
-        Consultar o Saldo disponível: Realize a consulta de saldo dos produtos     
-        disponíveis.
-        Cadastrar Fornecedores: Registre os dados de fornecedores, que incluem: Nome do 
-        produto, Nome do Fornecedor e contato. 
-        descrição, e outras informações relevantes.
-        Excluir Fornecedores: Exclua fornecedores.
-        Editar Fornecedores: Altere informações de fornecedores.
-        Cadastrar Categorias: Registre os dados das categorias, que incluem: Nome do 
-        produto e Fornecedor.
-        Excluir Categorias: Exclua categorias.
-        Editar Categorias: Altere informações de categorias.
-        
-O projeto foi desenvolvido através da linguagem de marcação HTML, que tem toda a estrutura da página, estilização CSS que deixou a página com todas as cores e estilos, alinhamentos e responsividade, juntamente com a linguagem de programação JavaScript que exibe as mensagens de erro, juntamente com a linguagem de programação PHP que faz toda interação com o banco de dados e lógica do sistema.
+O **Stock Manager** é um sistema web desenvolvido para facilitar a gestão de estoque em empresas e ambientes logísticos.  
+Permite o gerenciamento completo de produtos, fornecedores e categorias, proporcionando controle administrativo eficiente e organização das informações.
 
-Queria agradecer a Edna que me ensinou e teve calma no processo em que estava fazendo o curso, graças a ela, eu consegui iniciar o projeto com êxito e queria agradecer também ao SENAC que me concedeu a oportunidade através do curso de Programador de Sistemas, de aprender muitas coisas novas na área de programação.
+---
 
-Link do site: stockmanager.great-site.net
+## 🚀 Funcionalidades
+
+### 🔐 Autenticação
+- Login de usuários
+- Cadastro de novos usuários
+- Sistema de sessão
+- Estrutura preparada para recuperação de senha
+
+---
+
+### 📦 Gestão de Produtos
+- Cadastro de produtos
+- Edição de informações
+- Exclusão de registros
+- Consulta de saldo disponível
+- Associação com fornecedor e categoria
+
+---
+
+### 🏢 Gestão de Fornecedores
+- Cadastro de fornecedores
+- Edição de dados
+- Exclusão de registros
+- Controle de contato e relacionamento com produtos
+
+---
+
+### 🗂 Gestão de Categorias
+- Cadastro de categorias
+- Edição
+- Exclusão
+- Relacionamento com produtos e fornecedores
+
+---
+
+## 🛠 Tecnologias Utilizadas
+
+- **PHP (PDO)** – Backend e manipulação do banco de dados
+- **MySQL** – Banco de dados relacional
+- **HTML5** – Estrutura das páginas
+- **CSS3** – Estilização e layout
+- **JavaScript** – Validações e interações
+- **phpMyAdmin** – Gerenciamento do banco
+
+---
+
+## 🏗 Estrutura do Projeto
+
+│StockManager/
+├── css/
+├── js/
+├── img/
+├── conexao.php
+├── login.php
+├── index.php
+├── produtos.php
+├── fornecedores.php
+├── categorias.php
+├── inserir_*.php
+├── editar_*.php
+├── excluir_*.php
+
+O projeto segue uma organização modular separando operações de inserção, edição e exclusão por entidade.
+
+---
+
+## 🗄 Estrutura do Banco de Dados
+
+O sistema utiliza banco de dados relacional com as seguintes entidades principais:
+
+- produtos
+- fornecedores
+- categorias
+- usuarios
+
+Relacionamentos são realizados utilizando chaves estrangeiras e consultas JOIN.
+
+---
+
+## 🔒 Segurança
+
+- Uso de Prepared Statements (PDO)
+- Proteção contra SQL Injection
+- Controle de sessão
+- Validação de dados via backend e frontend
+
+---
+
+## 📱 Interface
+
+- Layout administrativo
+- Navegação por menu superior
+- Tabelas organizadas
+- Sistema responsivo
+
+---
+
+## 🌐 Acesso ao Projeto
+
+🔗 Demonstração online:  
+http://stockmanager.great-site.net
+
+---
+
+## 📈 Melhorias Futuras
+
+- Dashboard com indicadores
+- Controle de movimentação de estoque
+- Relatórios em PDF
+- Sistema de permissões avançado
+- API REST
+- Versão mobile
+
+---
+
+## 👨‍💻 Desenvolvedor
+
+Projeto desenvolvido por Mateus como prática de consolidação de conhecimentos em desenvolvimento web e sistemas administrativos.
