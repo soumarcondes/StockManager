@@ -58,15 +58,25 @@ Permite o gerenciamento completo de produtos, fornecedores e categorias, proporc
 ├── css/
 
 ├── js/
+
 ├── img/
+
 ├── conexao.php
+
 ├── login.php
+
 ├── index.php
+
 ├── produtos.php
+
 ├── fornecedores.php
+
 ├── categorias.php
+
 ├── inserir_*.php
+
 ├── editar_*.php
+
 ├── excluir_*.php
 
 O projeto segue uma organização modular separando operações de inserção, edição e exclusão por entidade.
