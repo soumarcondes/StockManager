@@ -54,7 +54,9 @@ Permite o gerenciamento completo de produtos, fornecedores e categorias, proporc
 ## 🏗 Estrutura do Projeto
 
 │StockManager/
+
 ├── css/
+
 ├── js/
 ├── img/
 ├── conexao.php
